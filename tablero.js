@@ -8,10 +8,11 @@ class Tablero {
   #turno;     // En esta variable queda guardo a quien le toca, toma valores: X o O
   #elementID;
   #marcador;
+  #round;
   #versusMachine;
   #endGame = false;
 
-  constructor(dimension = 3, versusMachine=false) {
+  constructor(dimension = 3, versusMachine=false, round) {
     this.#casillas = new Array();
     this.#dimension = dimension;
     this.#versusMachine = versusMachine;
@@ -23,9 +24,11 @@ class Tablero {
     }
     this.#turno = 'X';
     this.#marcador = new Marcador();
+    this.#round = document.getElementById('rondas');
   }
 
   imprimir(elementId='tablero') {
+
     let tablero = document.getElementById(elementId);
     this.#elementID = elementId;
     tablero.innerHTML = '';
@@ -45,7 +48,6 @@ class Tablero {
     }
     tablero.style.gridTemplateColumns = `repeat(${this.#dimension}, 1fr)`;
   }
-
   isFree(fila, columna) {
     return true ? this.#casillas[fila][columna] === null : false;
   }
@@ -175,6 +177,8 @@ class Tablero {
 
       this.#marcador.addPuntos(this.#turno);
       document.querySelector('.clearGame').classList.toggle('show');
+      
+      
     } else {
       // Si no se ha ganado hay que comprobar si el tablero está petao, si es así son tablas
       if (this.isFull()) {

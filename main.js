@@ -6,12 +6,12 @@ import "toastify-js/src/toastify.css"
 const buttonCreateTable = document.getElementById('createTable');
 const inputDimensions = document.getElementById('dimension');
 const resetButton = document.getElementById('resetGame');
+const round = document.getElementById('rondas');
 const clearButtons = document.querySelectorAll('.clearGameButton');
 const preGame = document.querySelector('.preGame');
 const inGame = document.querySelector('.inGame');
 
 let tablero;
-
 buttonCreateTable.addEventListener('click', (e) => {
   if (!inputDimensions.value) {
     Toastify({
