@@ -32,6 +32,25 @@ buttonCreateTable.addEventListener('click', (e) => {
     inputDimensions.focus();
     return false;
   }
+    if (!round.value) {
+      Toastify({
+        text: "Debe indicar un nuemro de rondas válidas",
+        duration: 3000,
+        newWindow: false,
+        close: true,
+        gravity: "top", // `top` or `bottom`
+        position: "right", // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+          background: "red",
+        },
+        onClick: function(){} // Callback after click
+      }).showToast();
+  
+      round.classList.add('error');
+      round.focus();
+      return false;
+    }
 
   if (isNaN(inputDimensions.value)) {
     Toastify({
@@ -53,8 +72,28 @@ buttonCreateTable.addEventListener('click', (e) => {
     return false;
   }
 
+  if (isNaN(round.value)) {
+    Toastify({
+      text: "Debe introducir un número de rondas válido",
+      duration: 3000,
+      newWindow: true,
+      close: true,
+      gravity: "top", // `top` or `bottom`
+      position: "right", // `left`, `center` or `right`
+      stopOnFocus: true, // Prevents dismissing of toast on hover
+      style: {
+        background: "red",
+      },
+      onClick: function(){} // Callback after click
+    }).showToast();
+
+    round.classList.add('error');
+    round.focus();
+    return false;
+  }
+
   let checkMachine = document.getElementById('machine');
-  tablero = new Tablero(parseInt(inputDimensions.value),checkMachine.checked);
+  tablero = new Tablero(parseInt(inputDimensions.value),checkMachine.checked, parseInt(round.value));
   tablero.imprimir('tablero');
 
   preGame.classList.toggle('hide');
@@ -71,6 +110,8 @@ for (let button of clearButtons) {
   });
 }
 
+
+
 resetButton.addEventListener('click', (e) => {
   document.getElementById(tablero.elementID).innerHTML = '';
   document.getElementById('marcador').innerHTML = '';
@@ -81,4 +122,6 @@ resetButton.addEventListener('click', (e) => {
   inGame.classList.toggle('hide');
   inputDimensions.value = '';
   inputDimensions.focus();
+  round.value = '';
+  round.focus();
 });

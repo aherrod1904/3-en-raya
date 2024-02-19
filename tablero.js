@@ -12,7 +12,7 @@ class Tablero {
   #versusMachine;
   #endGame = false;
 
-  constructor(dimension = 3, versusMachine=false, round) {
+  constructor(dimension = 3, versusMachine=false, round = 1) {
     this.#casillas = new Array();
     this.#dimension = dimension;
     this.#versusMachine = versusMachine;
@@ -24,11 +24,11 @@ class Tablero {
     }
     this.#turno = 'X';
     this.#marcador = new Marcador();
-    this.#round = document.getElementById('rondas');
+    this.#round = round;
   }
 
   imprimir(elementId='tablero') {
-
+    
     let tablero = document.getElementById(elementId);
     this.#elementID = elementId;
     tablero.innerHTML = '';
@@ -155,6 +155,7 @@ class Tablero {
       ganado = true;
     }
 
+
     if (ganado) {
       this.#endGame = true;
       Toastify({
@@ -174,9 +175,13 @@ class Tablero {
       libres.forEach((casillaLibre) => {
         casillaLibre.dataset.libre = '-';
       });
-
       this.#marcador.addPuntos(this.#turno);
-      document.querySelector('.clearGame').classList.toggle('show');
+      if (this.#round > 1){
+        document.querySelector('.clearGame').classList.toggle('show');
+      }else{
+        document.getElementById('limp').style.display = "none";
+      }
+      this.#round--;
       
       
     } else {
@@ -194,12 +199,28 @@ class Tablero {
           },
           onClick: function(){} // Callback after click
         }).showToast();
-        document.querySelector('.clearGame').classList.toggle('show');
-        this.#endGame = true;
+        if (this.#round > 1){
+          document.querySelector('.clearGame').classList.toggle('show');
+          this.#endGame = true;
+        }else{
+          Toastify({
+            text: `Han sido tablas`,
+            newWindow: true,
+            close: true,
+            gravity: "top", // `top` or `bottom`
+            position: "center", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            style: {
+              background: "blue",
+            },
+            onClick: function(){} // Callback after click
+          }).showToast();
+        }
+        this.#round--;
       }
-    }
 
   }
+}
 
   isFull() {
     return !this.#casillas.some(fila => fila.some(casilla => casilla === null));

@@ -1,10 +1,67 @@
+body{
+  background-color:rgb(38, 38, 253);
+}
+
+div.preGame{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  h1{
+    color: transparent;
+    background-image: linear-gradient(to left, yellow, orange, tomato, lawngreen, yellow);    
+    background-clip: text;
+    animation: color 3s linear 1s infinite running;
+    background-size: 1300%;  
+    position: absolute;
+    top: 10px;
+    font-size: 50px;
+    
+  }
+  label{
+    font-size: 20px;
+    color:white;
+    padding-bottom: 15px;
+  }
+  input{
+    margin-bottom: 50px;
+    padding-inline: 5px;
+    padding-block: 5px;
+    border: none;
+    border-radius: 5px;
+  }
+
+}
+@keyframes color {
+  from {
+      background-position: 0% 50%;
+  }
+
+  to {
+      background-position: 100% 50%;
+  }
+}
+ul{
+  color: white;
+}
+
+button{
+  padding-inline: 25px;
+  padding-block: 15px;
+  background-color: darkorange;
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer; 
+}
+
+
 #tablero {
   display: grid;
   margin: 0 auto;
   margin-top: 5%;
   grid-gap: 10px;
-  background-color: #fff;
-  color: #444;
+  color: white;
   max-width: 500px;
   >div {
     height: 100px;
@@ -21,6 +78,10 @@
     }
     &[data-libre='X'],&[data-libre='O'],&[data-libre='-']{
       cursor: not-allowed;
+      background-color:gray ;
+    }
+    &[data-libre='']{
+      background-color:gray ;
     }
   }
 }
