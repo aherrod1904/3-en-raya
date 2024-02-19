@@ -158,28 +158,42 @@ class Tablero {
 
     if (ganado) {
       this.#endGame = true;
+      let libres = document.querySelectorAll('div[data-libre=""]');
+      libres.forEach((casillaLibre) => {
+        casillaLibre.dataset.libre = '-';
+      });
+      
+      this.#marcador.addPuntos(this.#turno);
+      if (this.#round > 1){
       Toastify({
-        text: `Ha ganado el jugador ${this.#turno}`,
+        text: `El jugador ${this.#turno} ha ganado esta ronda`,
         newWindow: true,
         close: true,
         gravity: "top", // `top` or `bottom`
         position: "center", // `left`, `center` or `right`
         stopOnFocus: true, // Prevents dismissing of toast on hover
         style: {
-          background: "blue",
+          background: "green",
         },
         onClick: function(){} // Callback after click
       }).showToast();
-
-      let libres = document.querySelectorAll('div[data-libre=""]');
-      libres.forEach((casillaLibre) => {
-        casillaLibre.dataset.libre = '-';
-      });
-      this.#marcador.addPuntos(this.#turno);
-      if (this.#round > 1){
+      
         document.querySelector('.clearGame').classList.toggle('show');
       }else{
         document.getElementById('limp').style.display = "none";
+        Toastify({
+          text: `El ganador final es ${this.#marcador.ganadorFin()}`,
+          newWindow: true,
+          close: true,
+          gravity: "top", // `top` or `bottom`
+          position: "center", // `left`, `center` or `right`
+          stopOnFocus: true, // Prevents dismissing of toast on hover
+          style: {
+            background: "green",
+          },
+          onClick: function(){} // Callback after click
+        }).showToast();
+        
       }
       this.#round--;
       
@@ -187,31 +201,33 @@ class Tablero {
     } else {
       // Si no se ha ganado hay que comprobar si el tablero está petao, si es así son tablas
       if (this.isFull()) {
-        Toastify({
-          text: `Han sido tablas`,
-          newWindow: true,
-          close: true,
-          gravity: "top", // `top` or `bottom`
-          position: "center", // `left`, `center` or `right`
-          stopOnFocus: true, // Prevents dismissing of toast on hover
-          style: {
-            background: "blue",
-          },
-          onClick: function(){} // Callback after click
-        }).showToast();
+        this.#endGame = true;
         if (this.#round > 1){
-          document.querySelector('.clearGame').classList.toggle('show');
-          this.#endGame = true;
-        }else{
           Toastify({
-            text: `Han sido tablas`,
+            text: `Esta ronda han sido tablas`,
             newWindow: true,
             close: true,
             gravity: "top", // `top` or `bottom`
             position: "center", // `left`, `center` or `right`
             stopOnFocus: true, // Prevents dismissing of toast on hover
             style: {
-              background: "blue",
+              background: "green",
+            },
+            onClick: function(){} // Callback after click
+          }).showToast();
+          document.querySelector('.clearGame').classList.toggle('show');
+
+        }else{
+          document.getElementById('limp').style.display = "none";
+          Toastify({
+            text: `Ha sido un empate de puntos`,
+            newWindow: true,
+            close: true,
+            gravity: "top", // `top` or `bottom`
+            position: "center", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            style: {
+              background: "green",
             },
             onClick: function(){} // Callback after click
           }).showToast();
@@ -221,6 +237,7 @@ class Tablero {
 
   }
 }
+
 
   isFull() {
     return !this.#casillas.some(fila => fila.some(casilla => casilla === null));

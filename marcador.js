@@ -1,3 +1,6 @@
+import Toastify from 'toastify-js'
+import "toastify-js/src/toastify.css"
+
 class Marcador {
   #elementId;
   #jugadores = [
@@ -23,6 +26,7 @@ class Marcador {
     this.imprimir();
   }
 
+
   imprimir() {
     let marcadorFrontend = document.getElementById(this.#elementId);
     let ul = document.createElement('ul');
@@ -33,6 +37,16 @@ class Marcador {
     });
     marcadorFrontend.innerHTML = '';
     marcadorFrontend.append(ul);
+  }
+
+  ganadorFin(){
+    if (this.#jugadores[0].puntos > this.#jugadores[1].puntos){
+      return String('X');
+    }else if (this.#jugadores[1].puntos > this.#jugadores[0].puntos){
+      return String('O');
+    }else{
+      return String('Ha sido un empate')
+    }
   }
 }
 
