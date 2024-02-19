@@ -7,7 +7,7 @@ div.preGame{
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 87vh;
   h1{
     color: transparent;
     background-image: linear-gradient(to left, yellow, lawngreen, tomato, rgb(189, 89, 189), yellow);    
@@ -136,4 +136,19 @@ button{
     display: block;
     text-align: center;
   }
+}
+
+.movimientos{
+  display: none;
+  align-items: center;
+  flex-direction: column;
+  background-color:rgb(39, 39, 39);
+  color: white;
+  border-color: black;
+  padding-inline: 15px;
+  width: max-content;
+  border-style:solid;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
 }

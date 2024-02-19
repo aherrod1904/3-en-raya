@@ -1,6 +1,7 @@
 import Toastify from 'toastify-js'
 import "toastify-js/src/toastify.css"
 import Marcador from './marcador';
+import { Document, stringify } from 'postcss';
 
 class Tablero {
   #casillas;  // Este será el array de arrays donde guardaremos lo que hay en cada posición
@@ -73,8 +74,14 @@ class Tablero {
       if (this.#versusMachine) {
         let posicionLibre = this.getCasillaFreeRandom();
         this.setCasilla(posicionLibre.i, posicionLibre.j, 'O');
+        let mov = document.getElementById('movimientos');
+        let movp = document.createElement('p');
+        let filas = parseInt(posicionLibre.i) + 1;
+        let columnas = parseInt(posicionLibre.j) + 1;
+        movp.innerHTML = `el jugador ${this.#turno} a marcado la casilla ${filas}/${columnas}`;
+        mov.appendChild(movp);
         this.imprimir();
-        this.comprobarResultados()
+        this.comprobarResultados();
         if (this.#endGame) return false;
         this.toogleTurno();
       }
@@ -182,7 +189,7 @@ class Tablero {
       }else{
         document.getElementById('limp').style.display = "none";
         Toastify({
-          text: `El ganador final es ${this.#marcador.ganadorFin()}`,
+          text: `Resultado final: ${this.#marcador.ganadorFin()}`,
           newWindow: true,
           close: true,
           gravity: "top", // `top` or `bottom`
@@ -220,7 +227,7 @@ class Tablero {
         }else{
           document.getElementById('limp').style.display = "none";
           Toastify({
-            text: `Ha sido un empate de puntos`,
+            text: `${this.#marcador.ganadorFin()}`,
             newWindow: true,
             close: true,
             gravity: "top", // `top` or `bottom`
@@ -254,8 +261,18 @@ class Tablero {
           this.#turno
         )
         casillaSeleccionada.dataset.libre = this.#turno;
+
+        let mov = document.getElementById('movimientos');
+        let movp = document.createElement('p');
+        mov.style.display = 'flex';
+        let filas = parseInt(casillaSeleccionada.dataset.fila) + 1;
+        let columnas = parseInt(casillaSeleccionada.dataset.columna) + 1;
+        movp.innerHTML = `el jugador ${this.#turno} a marcado la casilla ${filas}/${columnas}`;
+        mov.appendChild(movp);
+
         this.comprobarResultados();
         this.toogleTurno();
+
       }
     });
 
@@ -281,6 +298,10 @@ class Tablero {
   }
 
   limpiar() {
+    let mov = document.getElementById('movimientos');
+    while (mov.firstChild) {
+      mov.removeChild(mov.firstChild);
+    }
     this.#casillas = this.#casillas.map(casilla => casilla.map(c => null));
     this.#endGame = false;
     this.imprimir();
