@@ -37,7 +37,7 @@ buttonCreateTable.addEventListener('click', (e) => {
   }
     if (!round.value) {
       Toastify({
-        text: "Debe indicar un nuemro de rondas válidas",
+        text: "Debe indicar un numero de rondas válidas",
         duration: 3000,
         newWindow: false,
         close: true,

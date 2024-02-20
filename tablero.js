@@ -1,7 +1,6 @@
 import Toastify from 'toastify-js'
 import "toastify-js/src/toastify.css"
 import Marcador from './marcador';
-import { Document, stringify } from 'postcss';
 
 class Tablero {
   #casillas;  // Este será el array de arrays donde guardaremos lo que hay en cada posición
@@ -10,7 +9,6 @@ class Tablero {
   #elementID;
   #marcador;
   #round;
-  #img;
   #versusMachine;
   #endGame = false;
 
@@ -69,11 +67,13 @@ class Tablero {
 
   toogleTurno() {
     if (this.#endGame) return false;
+    
 
     if (this.#turno === 'X') {
       this.#turno = 'O';
       //Comprobamos si jugamos contra la máquina
       if (this.#versusMachine) {
+        setTimeout(() => {
         let posicionLibre = this.getCasillaFreeRandom();
         this.setCasilla(posicionLibre.i, posicionLibre.j, 'O');
         let mov = document.getElementById('movimientos');
@@ -81,16 +81,20 @@ class Tablero {
         let filas = parseInt(posicionLibre.i) + 1;
         let columnas = parseInt(posicionLibre.j) + 1;
         movp.innerHTML = `el jugador ${this.#turno} a marcado la casilla ${filas}/${columnas}`;
-        mov.appendChild(movp);
+        
+          mov.appendChild(movp);
+        
         this.imprimir();
         this.comprobarResultados();
         if (this.#endGame) return false;
         this.toogleTurno();
+        },1000);
       }
 
     } else {
       this.#turno = 'X';
     }
+
   }
 
   comprobarResultados() {
@@ -269,9 +273,16 @@ class Tablero {
         mov.style.display = 'flex';
         let filas = parseInt(casillaSeleccionada.dataset.fila) + 1;
         let columnas = parseInt(casillaSeleccionada.dataset.columna) + 1;
+        movp.setAttribute('id', 'primero')
         movp.innerHTML = `el jugador ${this.#turno} a marcado la casilla ${filas}/${columnas}`;
-        mov.appendChild(movp);
-
+        setTimeout(() => {
+          if (!mov.hasChildNodes){
+            mov.appendChild(movp);
+          }else{
+            let child = document.getElementById('primero');
+            mov.insertBefore(movp, child);
+          }
+        }, 200);
         this.comprobarResultados();
         this.toogleTurno();
 
