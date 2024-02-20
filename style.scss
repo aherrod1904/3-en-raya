@@ -152,3 +152,129 @@ button{
   margin-right: auto;
   margin-top: 20px;
 }
+
+img{
+  width: 160px;
+  height: 80vh;
+
+}
+
+
+.img1{
+  display: none;
+  position: absolute;
+  top: 70px;
+  left: 150px;
+
+  
+}
+
+.img2{
+  position: absolute;
+  top: 70px;
+  right: 150px;
+  display: none;
+}
+
+.img{
+  cursor: pointer;
+  &::after{
+    content: 'x';
+    padding-inline: 2px;
+    color:blue;
+    background-color: lightgray;
+    cursor: pointer;
+    position: absolute;
+    right: 0.3px;
+    top: 0;
+  }
+
+  &::before{
+    content: '-';
+    padding-inline: 4px;
+    color:blue;
+    background-color: lightgray;
+    cursor: pointer;
+    position: absolute;
+    right: 14px;
+    top: 0;
+  }
+}
+
+.risediv{
+  width: 100%;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.rise{
+  width: 100%;
+}
+
+.riseh1{
+  color: white;
+}
+
+@media (max-width: 1300px){
+  .img1{
+    display: none;
+    position: absolute;
+    top: 70px;
+    left: 90px;
+  
+    
+  }
+  
+  .img2{
+    position: absolute;
+    top: 70px;
+    right: 90px;
+    display: none;
+  }
+}
+
+
+
+@media (max-width: 1080px){
+  .img1{
+    display: none;
+    position: absolute;
+    top: 70px;
+    left: 40px;
+  
+    
+  }
+  
+  .img2{
+    position: absolute;
+    top: 70px;
+    right: 40px;
+    display: none;
+  }
+}
+
+
+@media (max-width: 940px){
+
+  img{
+    width: 160px;
+    height: 10vh;
+  
+  }
+  .img1{
+    display: none;
+    position: absolute;
+    top: 70px;
+    left: 20px;
+  }
+  
+  .img2{
+    position: absolute;
+    top: 70px;
+    right: 90px;
+    display: none !important;
+  }
+}

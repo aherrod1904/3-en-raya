@@ -10,6 +10,7 @@ class Tablero {
   #elementID;
   #marcador;
   #round;
+  #img;
   #versusMachine;
   #endGame = false;
 
@@ -33,6 +34,7 @@ class Tablero {
     let tablero = document.getElementById(elementId);
     this.#elementID = elementId;
     tablero.innerHTML = '';
+    
     for (let fila = 0; fila < this.#dimension; fila++){
       for (let columna = 0; columna < this.#dimension; columna++){
         let casilla = document.createElement('div');
@@ -298,10 +300,6 @@ class Tablero {
   }
 
   limpiar() {
-    let mov = document.getElementById('movimientos');
-    while (mov.firstChild) {
-      mov.removeChild(mov.firstChild);
-    }
     this.#casillas = this.#casillas.map(casilla => casilla.map(c => null));
     this.#endGame = false;
     this.imprimir();
@@ -319,6 +317,7 @@ class Tablero {
       j: j
     }
   }
+  
 }
 
 export default Tablero;

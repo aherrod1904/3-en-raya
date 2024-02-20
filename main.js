@@ -10,6 +10,9 @@ const round = document.getElementById('rondas');
 const clearButtons = document.querySelectorAll('.clearGameButton');
 const preGame = document.querySelector('.preGame');
 const inGame = document.querySelector('.inGame');
+const img1 = document.getElementById('img1');
+const img2 = document.getElementById('img2');
+
 
 let tablero;
 buttonCreateTable.addEventListener('click', (e) => {
@@ -98,6 +101,9 @@ buttonCreateTable.addEventListener('click', (e) => {
 
   preGame.classList.toggle('hide');
   inGame.classList.toggle('hide');
+  
+  img1.style.display = 'block';
+  img2.style.display = 'block';
 });
 
 inputDimensions.addEventListener('keydown', () => {
@@ -124,4 +130,13 @@ resetButton.addEventListener('click', (e) => {
   inputDimensions.focus();
   round.value = '';
   round.focus();
+  img1.style.display = 'none';
+  img2.style.display = 'none';
+
+  let mov = document.getElementById('movimientos');
+  if (mov.hasChildNodes){
+    while (mov.childNodes.length >=1){
+      mov.removeChild(mov.firstChild)
+    }
+  }
 });
